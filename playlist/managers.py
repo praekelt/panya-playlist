@@ -10,11 +10,11 @@ class ContentPlaylistManager(models.Manager):
         today = datetime.now().date()
         start = datetime(year=today.year, month=today.month, day=today.day)
         end = datetime(year=today.year, month=today.month, day=today.day, hour=23, minute=59, second=59)
-        return self.for_content(content).exclude(commence__gt=end, expire__lt=start).order_by('commence')
+        return self.for_content(content).exclude(start__gt=end, end__lt=start).order_by('start')
         
     def for_content_now(self, content):
         now = datetime.now()
-        query_set = self.for_content(content).filter(commence__lt=now, expire__gt=now)
+        query_set = self.for_content(content).filter(start__lt=now, end__gt=now)
         return query_set[0] if query_set else None
 
     def todays_entries_for_content(self, content):
