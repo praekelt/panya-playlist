@@ -1,16 +1,13 @@
 from datetime import datetime, timedelta
 
+from django.contrib.contenttypes import generic
 from django.conf import settings
 from django.db import models
 
 from panya.models import ModelBase
 from playlist.managers import ContentPlaylistManager
 
-class PlaylistBase(ModelBase):
-    class Meta():
-        verbose_name = "Playlist"
-        verbose_name_plural = "Playlists"
-
+class Playlist(ModelBase):
     def current_entry(self):
         now = datetime.now()
         entries = self.playlistentry_set.filter(start__lt=now, end__gt=now).order_by('-start')
@@ -24,17 +21,9 @@ class PlaylistBase(ModelBase):
     def __unicode__(self):
         return self.title
 
-class Playlist(PlaylistBase):
-    class Meta():
-        proxy = True
-
-    def __unicode__(self):
-        return '%s (Playlist)' % self.title
-
-
 class PlaylistEntry(models.Model):
     title = models.CharField(max_length=64)
-    playlist = models.ForeignKey('playlist.PlaylistBase')
+    playlist = models.ForeignKey('playlist.Playlist')
     start = models.DateTimeField(
         verbose_name="Starting Date & Time", 
         help_text="Date and time at which this entry starts."
@@ -58,10 +47,11 @@ class ScheduledPlaylist(models.Model):
     
     content = models.ForeignKey(
         "panya.ModelBase", 
-        related_name="content_content_playlist_set"
+        related_name="content_content_playlist_set",
     )
+
     playlist = models.ForeignKey(
-        'playlist.PlaylistBase', 
+        'playlist.Playlist', 
         related_name="playlist_content_playlist_set"
     )
     start = models.DateTimeField()
