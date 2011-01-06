@@ -27,8 +27,6 @@ class PlaylistBase(ModelBase):
 class Playlist(PlaylistBase):
     class Meta():
         proxy = True
-        verbose_name = "Playlist"
-        verbose_name_plural = "Playlists"
 
     def __unicode__(self):
         return '%s (Playlist)' % self.title
