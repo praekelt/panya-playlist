@@ -42,7 +42,7 @@ class Command(BaseCommand):
         except WebserviceResponseError, e:
             print "Update failed: %s" % e
 
-        for playlist in Playlist.objects.exclude(class_name='ManualPlaylist'):
+        for playlist in Playlist.objects.filter(class_name__in=('DSTVPlaylist', 'AdactusPlaylist')):
             print "Updating %s" % playlist
             try:
                 pl = playlist.as_leaf_class()
@@ -58,11 +58,11 @@ class Command(BaseCommand):
                            print "Update failed for DSTVPlaylist playlist: %s, it has no dstv_id" % playlist.title
                     else:
                         print "Update failed for DSTVPlaylist playlist: %s, it has no matching dstv_id" % playlist.title
-                else:
+                elif pl.__class__.__name__ == 'AdactusPlaylist':
                     if pl.adactus_id is not None:
                         pl.update()
                     else:
-                        print "Update failed for DSTVPlaylist playlist: %s, it has no adactus_id" % playlist.title
+                        print "Update failed for AdactusPlaylist playlist: %s, it has no adactus_id" % playlist.title
             except WebserviceResponseError, e:
                 print "Update failed : %s" % e
                 
