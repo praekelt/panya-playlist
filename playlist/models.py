@@ -66,7 +66,7 @@ class ScheduledPlaylist(models.Model):
         A playlist entry falls between start and end if it starts on or after
         start and before end. Order by start.
         """
-        return self.playlist.playlistentry_set.filter(start__gt=self.start, start__lt=self.end, is_public=True).order_by('start')
+        return self.playlist.playlistentry_set.filter(start__gt=self.start, start__lt=self.end).order_by('start')
 
     def get_inclusive_entries_today(self):
         """
