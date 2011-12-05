@@ -22,7 +22,7 @@ class Playlist(ModelBase):
         return self.title
 
 class PlaylistEntry(models.Model):
-    title = models.CharField(max_length=64)
+    title = models.CharField(max_length=128)
     playlist = models.ForeignKey('playlist.Playlist')
     start = models.DateTimeField(
         verbose_name="Starting Date & Time", 
@@ -32,7 +32,23 @@ class PlaylistEntry(models.Model):
         verbose_name="Ending Date & Time", 
         help_text="Date and time at which this entry ends."
     )
-
+    dstv_id = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+    age_restriction = models.CharField(
+        max_length=50,
+        help_text="This playlist entry's age restriction rating",
+        blank=True,
+        null=True,
+    )
+    description = models.TextField(
+        blank=True,
+        null=True,
+        help_text="A more verbose description for the playlist entry.",
+    )
+    
     def __unicode__(self):
         return '%s %s - %s' % (self.title, self.start, self.end)
 
