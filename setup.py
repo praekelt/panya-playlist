@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='panya-playlist',
-    version='0.0.4',
+    version='0.0.5',
     description='Panya playlist app.',
     long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Praekelt Foundation',
