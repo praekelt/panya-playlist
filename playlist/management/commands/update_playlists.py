@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from playlist.models import Playlist
-from dstv.epg import WebserviceResponseError, Countries, Channels
+from generic_api.epg import WebserviceResponseError
 
 
 class Command(BaseCommand):
