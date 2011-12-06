@@ -12,10 +12,7 @@ class Command(BaseCommand):
             try:
                 pl = playlist.as_leaf_class()
                 if pl.__class__.__name__ in ('GenericPlaylist'):
-                    if pl.dstv_id is not None:
-                        pl.update()
-                    else:
-                        print "Update failed for %s playlist: %s, it has no matching dstv_id" % (pl.__class__.__name__, playlist.title)
+                    pl.update()
                 elif pl.__class__.__name__ == 'AdactusPlaylist':
                     if pl.adactus_id is not None:
                         pl.update()
